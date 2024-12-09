@@ -12,7 +12,7 @@ file_path = 'message.txt'
 with open(file_path, 'r') as file:
     lines = file.readlines()
 
-# Parse the entries to extract dates and image identifiers
+# Parse the entries to extract dates and image id
 backups = defaultdict(list)
 for line in lines:
     line = line.strip()
@@ -58,14 +58,14 @@ if missing_backups:
 else:
     pdf.cell(200, 10, txt="All backups are verified and present.", ln=True)
 
-# Save the PDF
+# Save PDF
 output_path = 'Backup_Verification_Report.pdf'  
 pdf.output(output_path)
 
 # Email configuration
-sender_email = "lucocoronado@gmail.com"  
+sender_email = "email here"  
 receiver_email = "bnalerts@gmail.com"
-email_password = "nwak hqkv pezb yqou"  
+email_password = "2fa authroizaiton from Gmail account is needed"  
 
 # Compose email
 subject = "Backup Verification Report"
