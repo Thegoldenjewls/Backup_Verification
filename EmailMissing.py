@@ -11,18 +11,36 @@ from email import encoders
 file_path = 'message.txt'  
 with open(file_path, 'r') as file:
     lines = file.readlines()
-
-# Parse the entries to extract dates and image id
 backups = defaultdict(list)
+invalid_entries = []
+
 for line in lines:
     line = line.strip()
+    if not line:  # Skip blank lines
+        continue
     parts = line.split('/')
-    if parts:
+    if len(parts) > 1:
         image_info = parts[-1]
-        date_part = image_info[:6]  
-        image_id = image_info.split('_')[-1]  
-        backups[image_id].append(date_part)
+        date_part = image_info[:6]
+        if date_part.isdigit() and len(date_part) == 6:  # Check for valid 6-digit date
+            try:
+                date = datetime.strptime(date_part, "%y%m%d")  # Parse the date
+                image_id = image_info.split('_')[-1]  # Extract image identifier 
+                backups[image_id].append(date_part)
+            except ValueError as e:
+                print(f"Invalid date format: {date_part} in line {line} - Error: {e}")
+                invalid_entries.append(line)
+        else:
+            print(f"Skipping invalid date: {date_part} in line {line}")
+            invalid_entries.append(line)
+    else:
+        print(f"Invalid line format: {line}")
+        invalid_entries.append(line)
 
+# Write invalid entries to a log file for review
+with open('invalid_entries.log', 'w') as log_file:
+    for entry in invalid_entries:
+        log_file.write(f"{entry}\n")
 # Convert dates to datetime objects and sort for each image
 for image_id in backups:
     backups[image_id] = sorted([datetime.strptime(date, "%y%m%d") for date in backups[image_id]])
@@ -63,9 +81,9 @@ output_path = 'Backup_Verification_Report.pdf'
 pdf.output(output_path)
 
 # Email configuration
-sender_email = "email here"  
-receiver_email = "bnalerts@gmail.com"
-email_password = "2fa authroizaiton from Gmail account is needed"  
+sender_email = "BFAlerts2024@gmail.com"  
+receiver_email = "techteam@bluenetworkinc.com"
+email_password = "wjsg nfjh yiej jdcz"  
 
 # Compose email
 subject = "Backup Verification Report"
