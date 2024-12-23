@@ -83,7 +83,7 @@ pdf.output(output_path)
 # Email configuration
 sender_email = "BFAlerts2024@gmail.com"  
 receiver_email = "techteam@bluenetworkinc.com"
-email_password = "wjsg nfjh yiej jdcz"  
+email_password = ""  
 
 # Compose email
 subject = "Backup Verification Report"
