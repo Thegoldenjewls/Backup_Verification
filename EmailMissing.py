@@ -66,8 +66,8 @@ else:
 
 # Email configuration
 sender_email = "BFAlerts2024@gmail.com"  
-receiver_email = "julianlucoronado@gmail.com"
-email_password = "wjsg nfjh yiej jdcz"  
+receiver_email = ""
+email_password = ""
 
 # Compose email
 subject = "Backup Verification Report"
